@@ -25,24 +25,25 @@ vs = cv2.VideoCapture(args["input"] if args["input"] else 0)
 
 while True:
 
-frames = []
+    frames = []
 
 # loop number of required sample frames
-	for i in range(0, SAMPLE_DURATION):
+for i in range(0, SAMPLE_DURATION):
 		# read frame from stream
 		(grabbed, frame) = vs.read()
 
         # if frame not grabbed, end of video, exit
-        if not grabbed:
+if not grabbed:
 			print("[INFO] no frame read from stream - exiting")
 			sys.exit(0)
 
-            frame = imutils.resize(frame, width=400)
-		frames.append(frame)
+frame = imutils.resize(frame, width=400)
+frames.append(frame)
 
         # now that our frames array is filled we can construct our blob(Binary Large Object)
-	blob = cv2.dnn.blobFromImages(frames, 1.0,
+blob = cv2.dnn.blobFromImages(frames, 1.0,
 		(SAMPLE_SIZE, SAMPLE_SIZE), (114.7748, 107.7354, 99.4750),
 		swapRB=True, crop=True)
-	blob = np.transpose(blob, (1, 0, 2, 3))
-	blob = np.expand_dims(blob, axis=0)
+
+blob = np.transpose(blob, (1, 0, 2, 3))
+blob = np.expand_dims(blob, axis=0)
